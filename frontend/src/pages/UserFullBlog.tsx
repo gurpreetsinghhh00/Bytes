@@ -13,7 +13,13 @@ const UserFullBlog = () => {
 
     const handleDelete = async (id : any)=>{
         try {
-            await axios.delete(`${DATABASE_URL}/api/v1/blog/${id}`)
+            console.log(id)
+            await axios.delete(`${DATABASE_URL}/api/v1/blog/${id}`, {
+                headers : {
+                    Authorization : "Bearer " + localStorage.getItem("token"),
+                }
+            })
+            navigate("/blogs/user")
         } catch (error) {
             console.error("Something went wrong while deleting blog")
         }

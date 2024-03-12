@@ -34,7 +34,7 @@ const Edit = () => {
     const editBlog = async ()=>{
       setError("")
       try {
-       await axios.put("/api/v1/blog", {
+       await axios.put(`${DATABASE_URL}/api/v1/blog`, {
         id : id,
         ...blogInput,
        }, {
