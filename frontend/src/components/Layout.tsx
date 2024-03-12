@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from './Loading';
+import { DATABASE_URL } from '../utils/config';
 
 const Layout = () => {
   const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const Layout = () => {
   const currentUser = async ()=>{
     setLoading(true);
     try {
-      await axios.get("/api/v1/user/current", 
+      await axios.get(`${DATABASE_URL}/api/v1/user/current`, 
       {
         headers : {
           Authorization : "Bearer " + localStorage.getItem("token"),
