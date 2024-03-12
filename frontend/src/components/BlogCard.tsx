@@ -8,7 +8,7 @@ interface BlogCardType {
     publishDate : string,
 }
 
-const BlogCard = ({id, authorName, title, content, publishDate} : BlogCardType) => {
+const BlogCard = ({authorName, title, content, publishDate} : BlogCardType) => {
   return (
     <div className="m-8 sm:m-12 border-b border-slate-200 ">
         <div className="flex flex-row items-center gap-2">
