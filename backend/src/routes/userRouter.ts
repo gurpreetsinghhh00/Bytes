@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { sign } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
 import { signinInput, signupInput } from "@devv00/medium-common";
 
 const userRouter = new Hono<{
@@ -100,6 +100,36 @@ userRouter.post("/signin", async (c)=>{
         c.status(500)
         return c.json({
             message : "Error while signin"
+        })
+    }
+})
+
+userRouter.get("/current", async (c)=>{
+    const header = c.req.header("Authorization") || "";
+    try {
+        if(header === ""){
+            c.status(401);
+            return c.json({
+                message : "Provide a valid token"
+            })
+        }
+        const token = header?.split(" ")[1];
+        const decodedToken = await verify(token, c.env.JWT_SECRET);
+        if(!decodedToken){
+            c.status(401);
+            return c.json({
+                message : "Unauthorized request"
+            });
+        }
+        c.status(200);
+        return c.json({
+            id : decodedToken.id,
+        })
+    } catch (error) {
+        console.error(error);
+        c.status(500)
+        return c.json({
+            message : "Not logged in or invalid token"
         })
     }
 })

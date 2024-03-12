@@ -22,10 +22,10 @@ model User {
 }
 
 model Post {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   title     String
   content   String
-  published Boolean @default(false)
+  createdAt DateTime @default(now()) @db.Date
   authorId  String
-  author    User    @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
 }

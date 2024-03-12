@@ -121,10 +121,22 @@ blogRouter.get("/bulk", async (c)=>{
     const prisma = new PrismaClient({
         datasourceUrl : c.env.DATABASE_URL,
     }).$extends(withAccelerate());
-
-    const body = await c.req.json();
     try {
-        const posts = await prisma.post.findMany();
+        const posts = await prisma.post.findMany(
+            {
+                select : {
+                    id : true,
+                    title : true,
+                    content : true,
+                    createdAt : true,
+                    author : {
+                        select : {
+                            name : true,
+                        }
+                    }
+                }
+            }
+        );
         c.status(200);
         return c.json({
             posts,
@@ -147,6 +159,17 @@ blogRouter.get("/:id", async (c)=>{
         const post = await prisma.post.findUnique({
             where : {
                 id,
+            },
+            select: {
+                id : true,
+                title : true,
+                content : true,
+                createdAt: true,
+                author : {
+                    select : {
+                        name : true,
+                    }
+                }
             }
         })
     
@@ -167,6 +190,67 @@ blogRouter.get("/:id", async (c)=>{
             message : "Error while fetching post"
         })
     }
+})
+
+blogRouter.get("/bulk/user", async (c)=>{
+    const authorId = c.get("userId");
+    const prisma = new PrismaClient({
+        datasourceUrl : c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    try {
+        const posts = await prisma.post.findMany({
+            where : {
+                authorId : authorId,
+            },
+            select : {
+                id : true,
+                title : true,
+                content : true,
+                createdAt : true,
+                author : {
+                    select : {
+                        name : true,
+                    }
+                }
+            }
+        });
+
+        c.status(200);
+        return c.json({
+            posts,
+        })
+    } catch (error) {
+        c.status(500)
+        return c.json({
+            message : "Error while fetching user posts",
+        })
+    }
+})
+
+blogRouter.delete("/:id", async(c)=>{
+    const id = c.req.param("id");
+    const prisma = new PrismaClient({
+        datasourceUrl : c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    try {
+        const response = await prisma.post.delete({
+            where : {
+                id : id,
+                authorId : c.get("userId")
+            }
+        })
+        c.status(200)
+        return c.json({
+            message : "Post deleted successfully",
+        })
+        
+    } catch (error) {
+        c.status(500)
+        return c.json({
+            message : "Error while deleting post",
+        })}
 })
 
 
