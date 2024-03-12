@@ -7,6 +7,7 @@ import { SigninInput } from "@devv00/medium-common"
 import axios from "axios"
 import { validate } from "../utils/helper"
 import Spinner from "../components/Spinner"
+import { DATABASE_URL } from "../utils/config"
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Signin = () => {
       return setError(message);
     setLoading(true)
     try {
-      const response = await axios.post("/api/v1/user/signin", {
+      const response = await axios.post(`${DATABASE_URL}/api/v1/user/signin`, {
         ...userInput
       });
       const token = response.data;

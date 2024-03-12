@@ -4,6 +4,7 @@ import { formattedDate } from "../utils/helper";
 import Button from "../components/Button";
 import axios from "axios";
 import Loading from "../components/Loading";
+import { DATABASE_URL } from "../utils/config";
 
 const UserFullBlog = () => {
     const {id} = useParams();
@@ -12,7 +13,7 @@ const UserFullBlog = () => {
 
     const handleDelete = async (id : any)=>{
         try {
-            await axios.delete(`/api/v1/blog/${id}`)
+            await axios.delete(`${DATABASE_URL}/api/v1/blog/${id}`)
         } catch (error) {
             console.error("Something went wrong while deleting blog")
         }
@@ -28,7 +29,7 @@ const UserFullBlog = () => {
         <div className="lg:col-span-1 p-2">
             <div className="pt-4 flex flex-row lg:flex-col items-center gap-4">
                 <Button onClick={()=>{navigate(`/edit/${blog?.id}`)}}>Edit</Button>
-                <Button onClick={()=>{handleDelete(blog?.id)}}>Update</Button>
+                <Button onClick={()=>{handleDelete(blog?.id)}}>Delete</Button>
             </div>
         </div>
     </div>

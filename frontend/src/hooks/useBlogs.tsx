@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { DATABASE_URL} from "../utils/config";
 
 export interface BlogType {
     id : string,
@@ -18,7 +19,7 @@ const useBlogs = (url : string)=>{
     const fetchBlogs = async ()=>{
         setLoading(true)
         try {
-            const response = await axios.get(`/api/v1/blog${url}`, {
+            const response = await axios.get(`${DATABASE_URL}/api/v1/blog${url}`, {
                 headers : {
                     Authorization : "Bearer " + localStorage.getItem("token"),
                 }

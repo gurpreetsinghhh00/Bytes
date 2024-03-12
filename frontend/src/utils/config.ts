@@ -1,0 +1,1 @@
+export const DATABASE_URL = "https://backend.demodevv00.workers.dev"

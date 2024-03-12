@@ -3,6 +3,7 @@ import { useState } from "react"
 import Button from "../components/Button"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { DATABASE_URL } from "../utils/config"
 
 const Publish = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Publish = () => {
   const publishBlog = async ()=>{
     setError("")
     try {
-     await axios.post("/api/v1/blog", 
+     await axios.post(`${DATABASE_URL}/api/v1/blog`, 
      {...blogInput}, 
      {
       headers : {

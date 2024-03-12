@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { CreateBlogInput} from "@devv00/medium-common";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { DATABASE_URL} from "../utils/config";
 
 const Edit = () => {
     const {id} = useParams();
@@ -15,7 +16,7 @@ const Edit = () => {
 
     const fetchBlog = async ()=>{
       try {
-          const response = await axios.get(`/api/v1/blog/${id}`, {
+          const response = await axios.get(`${DATABASE_URL}/api/v1/blog/${id}`, {
               headers : {
                   Authorization : "Bearer " + localStorage.getItem("token"),
               }

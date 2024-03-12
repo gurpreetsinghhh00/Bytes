@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BlogType } from "./useBlogs";
+import { DATABASE_URL } from "../utils/config";
 
 const useBlog = ({id} : {id : string}) => {
     const [loading, setLoading] = useState<boolean>();
@@ -9,7 +10,7 @@ const useBlog = ({id} : {id : string}) => {
     const fetchBlog = async ()=>{
         setLoading(true)
         try {
-            const response = await axios.get(`/api/v1/blog/${id}`, {
+            const response = await axios.get(`${DATABASE_URL}/api/v1/blog/${id}`, {
                 headers : {
                     Authorization : "Bearer " + localStorage.getItem("token"),
                 }
