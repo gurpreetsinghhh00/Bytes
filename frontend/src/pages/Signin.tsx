@@ -35,18 +35,19 @@ const Signin = () => {
       setLoading(false)
     } catch (error : any) {
       setError(error.response?.data?.message);
+      setLoading(false)
     }
   }
 
   return (
     <div className="w-full font-varela grid grid-cols-1 md:grid-cols-2">
-       <div className="flex flex-col justify-center items-center h-full min-h-screen sm:p-2 md:p-8 font-varela">
+       <div className="flex flex-col justify-center items-center h-screen md:h-full min-h-screen sm:p-2 md:p-8 font-varela">
         <div className="font-bold text-3xl">
         Login to your account
         </div>
         <div className="text-slate-400 text-sm">
             Don't have an account? &nbsp;
-            <Link to={"/signup"} className="underline">Login</Link>
+            <Link to={"/signup"} className="underline">Sign up</Link>
         </div>
         <form className="pt-4 w-4/5 md:w-3/4 sm:p-2 md:p-4" onSubmit={(e)=>e.preventDefault()}>
       
