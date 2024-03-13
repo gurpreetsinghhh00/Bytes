@@ -12,8 +12,8 @@ const Blog = () => {
     <div className="p-8 md:p-0 font-varela grid lg:grid-cols-4 w-full md:w-4/5 m-auto gap-8 mt-16 mb-16">
         <div className="lg:col-span-3 p-4 md:p-2">
             <div className="font-bold text-5xl">{blog?.title}</div>
-            <div className="text-slate-400">{`Posted on  ${formattedDate(blog?.createdAt)}`}</div>
-            <p className="mt-4">{blog?.content}</p>
+            <div className="mt-[5px] text-slate-400">{`Posted on  ${formattedDate(blog?.createdAt)}`}</div>
+            <p className="mt-4 break-all">{blog?.content}</p>
         </div>
         <div className="lg:col-span-1 p-2">
             <div>Author</div>
